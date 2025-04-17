@@ -58,7 +58,7 @@ CREATE TABLE bronze.csv_lessons (
     topic_id NVARCHAR(50),
     lesson_title NVARCHAR(300),
     lesson_type NVARCHAR(50),
-    duration_in_sec INT
+    duration_in_sec NVARCHAR(50)
 );
 GO
 
