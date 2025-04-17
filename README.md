@@ -58,6 +58,8 @@ Key outcomes:
 ```
 EDlearning-platform-data-warehouse/
 │
+├── datasets/                           # Raw datasets used for the project in csv format
+│
 ├── docs/                               # Project documentation and architecture details
 │   ├── etl.drawio                      # Draw.io file shows all different techniquies and methods of ETL
 │   ├── data_architecture.drawio        # Draw.io file shows the project's architecture
