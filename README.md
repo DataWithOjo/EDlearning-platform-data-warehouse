@@ -7,6 +7,7 @@ A modern data warehouse built using the **Medallion Architecture** (Bronze, Silv
 ## 🗂️ Data Architecture
 
 This project follows the **Medallion Architecture**, broken into three layers:
+![Data Warehouse Architecture](./docs/EdTech_company_DataWarehouse_Architecture.png)
 
 ### 🔸 Bronze Layer
 - **Raw ingestion layer**  
