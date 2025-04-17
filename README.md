@@ -51,7 +51,6 @@ Key outcomes:
 - Microsoft SQL Server (any edition)
 - SQL Server Management Studio (SSMS)
 - CSV files (provided in `bronze` layer)
-- Optional: Power BI or Tableau for dashboarding
 
 ---
 
