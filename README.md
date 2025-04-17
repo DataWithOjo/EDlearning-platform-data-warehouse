@@ -3,6 +3,16 @@
 A modern data warehouse built using the **Medallion Architecture** (Bronze, Silver, Gold) to model and transform structured data from a learning platform into insightful analytics. This project leverages **Microsoft SQL Server** and SQL transformations to simulate real-world data engineering pipelines, handling user activity logs, course structures, and feedback data.
 
 ---
+## 🧹 Data Preprocessing Before Ingestion (Bronze Layer)
+
+Before loading data into the **Bronze** layer, raw CSV files were first cleaned using Python to ensure consistency and compatibility with the SQL Server schema. This process involved:
+
+- Trimming extra whitespace from string fields  
+- Ensuring data types match table definitions (e.g., integers for durations)  
+- Resolving missing or malformed values if necessary  
+- Exporting a clean version of the dataset (`lesson_table_cleaned.csv`) for loading  
+
+This pre-ingestion data cleaning step is essential to prevent bulk insert errors and maintain the integrity of the raw layer in the Data Warehouse.
 
 ## 🗂️ Data Architecture
 
