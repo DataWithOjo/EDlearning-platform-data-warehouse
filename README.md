@@ -54,10 +54,8 @@ Key outcomes:
 
 ---
 
----
-
 ## 📁 Repository Structure
-
+```
 EDlearning-platform-data-warehouse/
 │
 ├── docs/                               # Project documentation and architecture details
@@ -81,6 +79,7 @@ EDlearning-platform-data-warehouse/
 └── requirements.txt                    # Dependencies and requirements for the project
 ```
 ---
+
 📖 License
 
 This project is open-sourced under the MIT License.
