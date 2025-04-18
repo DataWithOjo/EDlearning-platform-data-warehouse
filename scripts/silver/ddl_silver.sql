@@ -17,7 +17,8 @@ IF OBJECT_ID('silver.csv_tracks', 'U') IS NOT NULL
 GO
 CREATE TABLE silver.csv_tracks (
     track_id NVARCHAR(50),
-    track_title NVARCHAR(300)
+    track_title NVARCHAR(300),
+	dwh_create_date    DATETIME2 DEFAULT GETDATE()
 );
 GO
 
@@ -30,7 +31,8 @@ GO
 CREATE TABLE silver.csv_courses (
     course_id NVARCHAR(50),
     track_id NVARCHAR(50),
-    course_title NVARCHAR(300)
+    course_title NVARCHAR(300),
+	dwh_create_date    DATETIME2 DEFAULT GETDATE()
 );
 GO
 
@@ -43,7 +45,8 @@ GO
 CREATE TABLE silver.csv_topics (
     topic_id NVARCHAR(50),
     course_id NVARCHAR(50),
-    topic_title NVARCHAR(300)
+    topic_title NVARCHAR(300),
+	dwh_create_date    DATETIME2 DEFAULT GETDATE()
 );
 GO
 
@@ -58,7 +61,8 @@ CREATE TABLE silver.csv_lessons (
     topic_id NVARCHAR(50),
     lesson_title NVARCHAR(300),
     lesson_type NVARCHAR(50),
-    duration_in_sec INT
+    duration_in_sec INT,
+	dwh_create_date    DATETIME2 DEFAULT GETDATE()
 );
 GO
 
@@ -71,7 +75,8 @@ GO
 CREATE TABLE silver.csv_user_registrations (
     user_id NVARCHAR(50),
     registration_date DATE,
-    user_info NVARCHAR(MAX)  -- Raw JSON or string-based user info
+    user_info NVARCHAR(MAX),  -- Raw JSON or string-based user info
+	dwh_create_date    DATETIME2 DEFAULT GETDATE()
 );
 GO
 
@@ -87,7 +92,8 @@ CREATE TABLE silver.csv_user_lesson_progress (
     lesson_id NVARCHAR(50),
     completion_percentage_difference INT,
     overall_completion_percentage INT,
-    activity_recorded_datetime_in_utc DATETIMEOFFSET
+    activity_recorded_datetime_in_utc DATETIMEOFFSET,
+	dwh_create_date    DATETIME2 DEFAULT GETDATE()
 );
 GO
 
@@ -105,6 +111,7 @@ CREATE TABLE silver.csv_user_feedback (
     lesson_id NVARCHAR(50),
     language NVARCHAR(50),
     question NVARCHAR(50),
-    answer NVARCHAR(300)
+    answer NVARCHAR(300),
+	dwh_create_date    DATETIME2 DEFAULT GETDATE()
 );
 GO
