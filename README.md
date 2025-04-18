@@ -4,6 +4,18 @@ A modern data warehouse built using the **Medallion Architecture** (Bronze, Silv
 
 ---
 
+## 🧹 Data Preprocessing Before Ingestion (Bronze Layer)
+
+Before ingesting raw data into the **Bronze Layer** of the data warehouse, a preprocessing step was performed using Python to ensure that the data met the required structural and format constraints for successful loading into SQL Server.
+
+### 🔍 Objective:
+To clean and prepare raw lesson_table CSV file by removing inconsistencies, formatting issues, and ensuring compatibility with the SQL Server schema.
+
+### 🧪 Tasks Performed:
+- **Whitespace Trimming:** Removed leading/trailing whitespace from all string fields.
+- **Delimiter Conflict Handling:** Replaced commas within the `lesson_title` column (which interfered with CSV parsing) with pipe characters (`|`).
+- **Export of Clean File:** Saved a cleaned version of the CSV file (`lesson_table_cleaned.csv`) for reliable ingestion.
+
 ## 🗂️ Data Architecture
 
 This project follows the **Medallion Architecture**, broken into three layers:
