@@ -75,7 +75,13 @@ GO
 CREATE TABLE silver.csv_user_registrations (
     user_id NVARCHAR(50),
     registration_date DATE,
-    user_info NVARCHAR(MAX),  -- Raw JSON or string-based user info
+    city NVARCHAR(50),
+    state NVARCHAR(50),
+    country NVARCHAR(50),
+    highest_degree NVARCHAR(50),
+    cgpa DECIMAL(3,1),
+    gender NVARCHAR(10),
+    dob DATE,
 	dwh_create_date    DATETIME2 DEFAULT GETDATE()
 );
 GO
