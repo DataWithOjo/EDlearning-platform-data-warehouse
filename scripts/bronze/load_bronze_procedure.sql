@@ -102,7 +102,7 @@ BEGIN
 		TRUNCATE TABLE bronze.csv_user_registrations;
 		PRINT '>> Inserting Data Into: bronze.csv_user_registrations';
 		BULK INSERT bronze.csv_user_registrations
-		FROM 'C:\Users\USER\Documents\kaggle_analytical_engineer\user_registrations.csv'
+		FROM 'C:\Users\USER\Documents\kaggle_analytical_engineer\user_registrations_cleaned.csv'
 		WITH (
 			FIRSTROW = 2,
 			FIELDTERMINATOR = ',',
