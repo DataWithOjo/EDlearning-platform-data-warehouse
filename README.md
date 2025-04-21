@@ -9,12 +9,20 @@ A modern data warehouse built using the **Medallion Architecture** (Bronze, Silv
 Before ingesting raw data into the **Bronze Layer** of the data warehouse, a preprocessing step was performed using Python to ensure that the data met the required structural and format constraints for successful loading into SQL Server.
 
 ### 🔍 Objective:
-To clean and prepare raw lesson_table CSV file by removing inconsistencies, formatting issues, and ensuring compatibility with the SQL Server schema.
+- To clean and prepare raw lesson_table CSV file by removing inconsistencies, formatting issues, and ensuring compatibility with the SQL Server schema.
+- To clean and prepare the raw `user_registrations.csv` file by fixing broken JSON, extracting nested fields, and ensuring the data is ready to be stored in the Bronze Layer of the data warehouse.
 
 ### 🧪 Tasks Performed:
 - **Whitespace Trimming:** Removed leading/trailing whitespace from all string fields.
 - **Delimiter Conflict Handling:** Replaced commas within the `lesson_title` column (which interfered with CSV parsing) with pipe characters (`|`).
 - **Export of Clean File:** Saved a cleaned version of the CSV file (`lesson_table_cleaned.csv`) for reliable ingestion.
+- **Broken JSON Fix:** Corrected malformed JSON strings in rows 38 to 44 of the `user_info` column, replacing them with properly structured JSON objects.
+- **Nested Field Extraction:** Parsed and extracted fields such as `city`, `state`, `country`, `highest_degree`, `cgpa`, `gender`, and `dob` from the nested JSON structure.
+- **Data Cleaning:** 
+  - Normalized city names to Title Case.
+  - Converted `cgpa` values to numeric format to allow calculations and prevent type errors.
+- **Column Removal:** Dropped the original `user_info` column after successful parsing and transformation.
+- **Export of Clean File:** Saved the cleaned version of the dataset as `user_registrations_cleaned.csv` for smooth ingestion into the Bronze Layer.
 
 ## 🗂️ Data Architecture
 
