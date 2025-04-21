@@ -98,7 +98,7 @@ CREATE TABLE silver.csv_user_lesson_progress (
     lesson_id NVARCHAR(50),
     completion_percentage_difference INT,
     overall_completion_percentage INT,
-    activity_recorded_datetime_in_utc DATETIMEOFFSET,
+    activity_recorded_datetime DATETIME,
 	dwh_create_date    DATETIME2 DEFAULT GETDATE()
 );
 GO
