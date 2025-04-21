@@ -80,7 +80,7 @@ CREATE TABLE silver.csv_user_registrations (
     country NVARCHAR(50),
     highest_degree NVARCHAR(50),
     cgpa DECIMAL(3,1),
-    gender NVARCHAR(10),
+    gender NVARCHAR(50),
     dob DATE,
 	dwh_create_date    DATETIME2 DEFAULT GETDATE()
 );
