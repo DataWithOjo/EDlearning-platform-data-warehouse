@@ -1,6 +1,6 @@
-# 📒 Data Catalogue – Gold Layer (Snowflake Schema)
+# 📒 Data Catalogue – Gold Layer (Star Schema)
 
-This document describes the views available in the **Gold Layer** of the data warehouse for the EdTech analytics project. The Gold Layer presents a business-ready, analytics-friendly schema using a **Snowflake Schema** model, with dimensions, facts, and aggregated views derived from the Silver Layer.
+This document describes the views available in the **Gold Layer** of the data warehouse for the EdTech analytics project. The Gold Layer presents a business-ready, analytics-friendly schema using a **Star Schema** model, with dimensions, facts, and aggregated views derived from the Silver Layer.
 
 ---
 
