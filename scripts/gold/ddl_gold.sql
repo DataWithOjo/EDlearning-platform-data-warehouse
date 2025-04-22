@@ -53,22 +53,6 @@ FROM silver.csv_user_feedback;
 GO
 
 -- Dimension Views
-IF OBJECT_ID('gold.dim_user_registrations', 'V') IS NOT NULL DROP VIEW gold.dim_user_registrations;
-GO
-CREATE VIEW gold.dim_user_registrations AS
-SELECT
-    user_id,
-    city,
-    state,
-    country,
-    highest_degree,
-    cgpa,
-    gender,
-    dob AS date_of_birth,
-    registration_date
-FROM silver.csv_user_registrations;
-GO
-
 IF OBJECT_ID('gold.dim_lessons', 'V') IS NOT NULL DROP VIEW gold.dim_lessons;
 GO
 CREATE VIEW gold.dim_lessons AS
