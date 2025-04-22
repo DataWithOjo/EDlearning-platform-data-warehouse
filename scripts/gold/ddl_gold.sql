@@ -5,7 +5,7 @@ DDL Script: Create Gold Views
 Script Purpose:
     This script creates views for the Gold layer in the data warehouse.
 
-    The Gold layer follows a Snowflake Schema design, consisting of:
+    The Gold layer follows a star Schema design, consisting of:
         - Dimension views that capture descriptive attributes
         - Fact views that record measurable events
         - Aggregated views for enhanced analytics and performance
@@ -53,47 +53,6 @@ FROM silver.csv_user_feedback;
 GO
 
 -- Dimension Views
-IF OBJECT_ID('gold.dim_lessons', 'V') IS NOT NULL DROP VIEW gold.dim_lessons;
-GO
-CREATE VIEW gold.dim_lessons AS
-SELECT
-    lesson_id,
-    topic_id,
-    lesson_title,
-    lesson_type,
-    duration_in_sec
-FROM silver.csv_lessons;
-GO
-
-IF OBJECT_ID('gold.dim_topics', 'V') IS NOT NULL DROP VIEW gold.dim_topics;
-GO
-CREATE VIEW gold.dim_topics AS
-SELECT
-    topic_id,
-    course_id,
-    topic_title
-FROM silver.csv_topics;
-GO
-
-IF OBJECT_ID('gold.dim_courses', 'V') IS NOT NULL DROP VIEW gold.dim_courses;
-GO
-CREATE VIEW gold.dim_courses AS
-SELECT
-    course_id,
-    track_id,
-    course_title
-FROM silver.csv_courses;
-GO
-
-IF OBJECT_ID('gold.dim_tracks', 'V') IS NOT NULL DROP VIEW gold.dim_tracks;
-GO
-CREATE VIEW gold.dim_tracks AS
-SELECT
-    track_id,
-    track_title
-FROM silver.csv_tracks;
-GO
-
 IF OBJECT_ID('gold.dim_content_structure', 'V') IS NOT NULL DROP VIEW gold.dim_content_structure;
 GO
 CREATE VIEW gold.dim_content_structure AS
