@@ -24,7 +24,8 @@ Usage:
 */
 
 -- Fact Views
-IF OBJECT_ID('gold.fact_user_lesson_progress', 'V') IS NOT NULL DROP VIEW gold.fact_user_lesson_progress;
+IF OBJECT_ID('gold.fact_user_lesson_progress', 'V') IS NOT NULL 
+    DROP VIEW gold.fact_user_lesson_progress;
 GO
 CREATE VIEW gold.fact_user_lesson_progress AS
 SELECT 
@@ -37,7 +38,8 @@ SELECT
 FROM silver.csv_user_lesson_progress;
 GO
 
-IF OBJECT_ID('gold.fact_user_feedback', 'V') IS NOT NULL DROP VIEW gold.fact_user_feedback;
+IF OBJECT_ID('gold.fact_user_feedback', 'V') IS NOT NULL 
+    DROP VIEW gold.fact_user_feedback;
 GO
 CREATE VIEW gold.fact_user_feedback AS
 SELECT
@@ -53,7 +55,8 @@ FROM silver.csv_user_feedback;
 GO
 
 -- Dimension Views
-IF OBJECT_ID('gold.dim_user_demographics_details', 'V') IS NOT NULL DROP VIEW gold.dim_user_demographics_details;
+IF OBJECT_ID('gold.dim_user_demographics_details', 'V') IS NOT NULL 
+    DROP VIEW gold.dim_user_demographics_details;
 GO
 CREATE VIEW gold.dim_user_demographics_details AS
 SELECT
@@ -69,7 +72,8 @@ SELECT
 FROM silver.csv_user_registrations;
 GO
     
-IF OBJECT_ID('gold.dim_content_structure', 'V') IS NOT NULL DROP VIEW gold.dim_content_structure;
+IF OBJECT_ID('gold.dim_content_structure', 'V') IS NOT NULL 
+    DROP VIEW gold.dim_content_structure;
 GO
 CREATE VIEW gold.dim_content_structure AS
 SELECT
@@ -89,7 +93,8 @@ LEFT JOIN silver.csv_tracks ct ON sc.track_id = ct.track_id;
 GO
 
 -- Aggregate Views
-IF OBJECT_ID('gold.agg_day_and_lesson_wise_user_activity', 'V') IS NOT NULL DROP VIEW gold.agg_day_and_lesson_wise_user_activity;
+IF OBJECT_ID('gold.agg_day_and_lesson_wise_user_activity', 'V') IS NOT NULL 
+    DROP VIEW gold.agg_day_and_lesson_wise_user_activity;
 GO
 CREATE VIEW gold.agg_day_and_lesson_wise_user_activity AS
 SELECT
@@ -104,7 +109,8 @@ GROUP BY
     CAST(activity_recorded_datetime AS DATE);
 GO
 
-IF OBJECT_ID('gold.agg_user_learning_streaks', 'V') IS NOT NULL DROP VIEW gold.agg_user_learning_streaks;
+IF OBJECT_ID('gold.agg_user_learning_streaks', 'V') IS NOT NULL 
+    DROP VIEW gold.agg_user_learning_streaks;
 GO
 SET DATEFIRST 7;
 GO
@@ -174,7 +180,8 @@ SELECT
 FROM final_streaks;
 GO
 
-IF OBJECT_ID('gold.agg_course_wise_user_completion_percentages', 'V') IS NOT NULL DROP VIEW gold.agg_course_wise_user_completion_percentages;
+IF OBJECT_ID('gold.agg_course_wise_user_completion_percentages', 'V') IS NOT NULL 
+    DROP VIEW gold.agg_course_wise_user_completion_percentages;
 GO
 CREATE VIEW gold.agg_course_wise_user_completion_percentages AS
 WITH lesson_course_mapping AS (
@@ -218,7 +225,8 @@ FROM user_course_completion ucc
 JOIN course_lesson_counts clc ON ucc.course_id = clc.course_id;
 GO
 
-IF OBJECT_ID('gold.agg_user_feedback_details', 'V') IS NOT NULL DROP VIEW gold.agg_user_feedback_details;
+IF OBJECT_ID('gold.agg_user_feedback_details', 'V') IS NOT NULL 
+    DROP VIEW gold.agg_user_feedback_details;
 GO
 CREATE VIEW gold.agg_user_feedback_details AS
 SELECT 
