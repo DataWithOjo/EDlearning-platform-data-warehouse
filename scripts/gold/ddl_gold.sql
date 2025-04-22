@@ -53,6 +53,22 @@ FROM silver.csv_user_feedback;
 GO
 
 -- Dimension Views
+IF OBJECT_ID('gold.dim_user_demographics_details', 'V') IS NOT NULL DROP VIEW gold.dim_user_demographics_details;
+GO
+CREATE VIEW gold.dim_user_demographics_details AS
+SELECT
+    user_id,
+    city,
+    state,
+    country,
+    gender,
+    dob,
+    highest_degree,
+    cgpa,
+    registration_date
+FROM silver.csv_user_registrations;
+GO
+    
 IF OBJECT_ID('gold.dim_content_structure', 'V') IS NOT NULL DROP VIEW gold.dim_content_structure;
 GO
 CREATE VIEW gold.dim_content_structure AS
@@ -215,20 +231,4 @@ SELECT
     MIN(creation_datetime) AS feedback_timestamp
 FROM silver.csv_user_feedback
 GROUP BY user_id, lesson_id;
-GO
-
-IF OBJECT_ID('gold.dim_user_demographics_details', 'V') IS NOT NULL DROP VIEW gold.dim_user_demographics_details;
-GO
-CREATE VIEW gold.dim_user_demographics_details AS
-SELECT
-    user_id,
-    city,
-    state,
-    country,
-    gender,
-    dob,
-    highest_degree,
-    cgpa,
-    registration_date
-FROM silver.csv_user_registrations;
 GO
