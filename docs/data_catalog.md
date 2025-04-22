@@ -6,26 +6,6 @@ This document describes the views available in the **Gold Layer** of the data wa
 
 ## 📘 Dimension Views
 
-### `gold.dim_user_registrations`
-
-These are descriptive tables (or “lookup” tables) that provide context for fact tables. They don’t typically change as often and are used to enrich reports and dashboards.
-
-**Example Use Case**: Understand learner behavior segmented by country, degree, or registration month.
-
-| Column Name       | Data Type      | Description                        |
-|-------------------|----------------|------------------------------------|
-| user_id           | NVARCHAR(50)   | Unique identifier for the user     |
-| city              | NVARCHAR(50)   | City of the user                   |
-| state             | NVARCHAR(50)   | State of the user                  |
-| country           | NVARCHAR(50)   | Country of the user                |
-| highest_degree    | NVARCHAR(50)   | Highest educational qualification  |
-| cgpa              | DECIMAL(3,1)   | Cumulative grade point average     |
-| gender            | NVARCHAR(50)   | Gender of the user                 |
-| date_of_birth     | DATE           | Date of birth                      |
-| registration_date | DATE           | Date of registration               |
-
----
-
 ### `gold.dim_user_demographics_details`
 
 An extension of `dim_user_registrations`, this view standardizes user demographic attributes with potentially enriched or de-duplicated values, making it ideal for demographic analysis and segmentation modeling.
