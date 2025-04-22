@@ -1,4 +1,4 @@
-# 📒 Data Catalogue – Gold Layer (Snow Flake Schema)
+# 📒 Data Catalogue – Gold Layer (Snowflake Schema)
 
 This document describes the views available in the **Gold Layer** of the data warehouse for the EdTech analytics project. The Gold Layer presents a business-ready, analytics-friendly schema using a **Snowflake Schema** model, with dimensions, facts, and aggregated views derived from the Silver Layer.
 
@@ -6,189 +6,223 @@ This document describes the views available in the **Gold Layer** of the data wa
 
 ## 📘 Dimension Views
 
-These views represent the descriptive attributes for analysis.
-
 ### `gold.dim_user_registrations`
-User registration and profile details.
 
-| Column Name         | Data Type | Description                          |
-|---------------------|-----------|--------------------------------------|
-| user_id             | INT       | Unique identifier for the user       |
-| city                | TEXT      | City of the user                     |
-| state               | TEXT      | State of the user                    |
-| country             | TEXT      | Country of the user                  |
-| highest_degree      | TEXT      | Highest educational qualification    |
-| cgpa                | FLOAT     | Cumulative grade point average       |
-| gender              | TEXT      | Gender of the user                   |
-| date_of_birth       | DATE      | Date of birth                        |
-| registration_date   | DATE      | Date of registration                 |
+These are descriptive tables (or “lookup” tables) that provide context for fact tables. They don’t typically change as often and are used to enrich reports and dashboards.
+
+**Example Use Case**: Understand learner behavior segmented by country, degree, or registration month.
+
+| Column Name       | Data Type      | Description                        |
+|-------------------|----------------|------------------------------------|
+| user_id           | NVARCHAR(50)   | Unique identifier for the user     |
+| city              | NVARCHAR(50)   | City of the user                   |
+| state             | NVARCHAR(50)   | State of the user                  |
+| country           | NVARCHAR(50)   | Country of the user                |
+| highest_degree    | NVARCHAR(50)   | Highest educational qualification  |
+| cgpa              | DECIMAL(3,1)   | Cumulative grade point average     |
+| gender            | NVARCHAR(50)   | Gender of the user                 |
+| date_of_birth     | DATE           | Date of birth                      |
+| registration_date | DATE           | Date of registration               |
 
 ---
 
 ### `gold.dim_user_demographics_details`
-Extended user demographic information.
 
-| Column Name         | Data Type | Description                          |
-|---------------------|-----------|--------------------------------------|
-| user_id             | INT       | Unique identifier for the user       |
-| city                | TEXT      | City                                 |
-| state               | TEXT      | State                                |
-| country             | TEXT      | Country                              |
-| gender              | TEXT      | Gender                               |
-| dob                 | DATE      | Date of birth                        |
-| highest_degree      | TEXT      | Degree achieved                      |
-| cgpa                | FLOAT     | Grade point average                  |
-| registration_date   | DATE      | Date of joining                      |
+An extension of `dim_user_registrations`, this view standardizes user demographic attributes with potentially enriched or de-duplicated values, making it ideal for demographic analysis and segmentation modeling.
+
+**Example Use Case**: Analyze trends in user performance based on age groups or education background.
+
+| Column Name       | Data Type      | Description                        |
+|-------------------|----------------|------------------------------------|
+| user_id           | NVARCHAR(50)   | Unique identifier for the user     |
+| city              | NVARCHAR(50)   | City                               |
+| state             | NVARCHAR(50)   | State                              |
+| country           | NVARCHAR(50)   | Country                            |
+| gender            | NVARCHAR(50)   | Gender                             |
+| dob               | DATE           | Date of birth                      |
+| highest_degree    | NVARCHAR(50)   | Degree achieved                    |
+| cgpa              | DECIMAL(3,1)   | Grade point average                |
+| registration_date | DATE           | Date of joining                    |
 
 ---
 
 ### `gold.dim_lessons`
-Metadata of lessons.
 
-| Column Name     | Data Type | Description               |
-|------------------|-----------|---------------------------|
-| lesson_id        | INT       | Unique lesson identifier  |
-| topic_id         | INT       | Associated topic ID       |
-| lesson_title     | TEXT      | Title of the lesson       |
-| lesson_type      | TEXT      | Type (video, quiz, etc.)  |
-| duration_in_sec  | INT       | Duration in seconds       |
+A lookup table for lessons, storing metadata such as lesson title, type (e.g., video or quiz), and duration.
+
+**Example Use Case**: Identify the most time-consuming or most accessed lessons.
+
+| Column Name     | Data Type      | Description               |
+|-----------------|----------------|---------------------------|
+| lesson_id       | NVARCHAR(50)   | Unique lesson identifier  |
+| topic_id        | NVARCHAR(50)   | Associated topic ID       |
+| lesson_title    | NVARCHAR(300)  | Title of the lesson       |
+| lesson_type     | NVARCHAR(50)   | Type (video, quiz, etc.)  |
+| duration_in_sec | INT            | Duration in seconds       |
 
 ---
 
 ### `gold.dim_topics`
-Metadata of topics.
 
-| Column Name     | Data Type | Description               |
-|------------------|-----------|---------------------------|
-| topic_id         | INT       | Unique topic ID           |
-| course_id        | INT       | Associated course ID      |
-| topic_title      | TEXT      | Title of the topic        |
+Topics group lessons into higher-level learning units. This dimension helps analyze performance or engagement across broader subjects.
+
+**Example Use Case**: Compare completion rates across different topics within the same course.
+
+| Column Name   | Data Type      | Description             |
+|---------------|----------------|-------------------------|
+| topic_id      | NVARCHAR(50)   | Unique topic ID         |
+| course_id     | NVARCHAR(50)   | Associated course ID    |
+| topic_title   | NVARCHAR(300)  | Title of the topic      |
 
 ---
 
 ### `gold.dim_courses`
-Metadata of courses.
 
-| Column Name     | Data Type | Description              |
-|------------------|-----------|--------------------------|
-| course_id        | INT       | Unique course ID         |
-| track_id         | INT       | Associated track ID      |
-| course_title     | TEXT      | Course name              |
+Courses are collections of topics. This view provides metadata like course titles and the associated track.
+
+**Example Use Case**: Evaluate user engagement across different courses or compare course popularity.
+
+| Column Name   | Data Type      | Description             |
+|---------------|----------------|-------------------------|
+| course_id     | NVARCHAR(50)   | Unique course ID        |
+| track_id      | NVARCHAR(50)   | Associated track ID     |
+| course_title  | NVARCHAR(300)  | Course name             |
 
 ---
 
 ### `gold.dim_tracks`
-Metadata of tracks.
 
-| Column Name     | Data Type | Description              |
-|------------------|-----------|--------------------------|
-| track_id         | INT       | Unique track ID          |
-| track_title      | TEXT      | Title of the track       |
+Tracks are high-level learning paths made up of multiple courses. This dimension helps in program-level reporting.
+
+**Example Use Case**: Measure how many learners are enrolled in each learning track and how they perform.
+
+| Column Name   | Data Type      | Description             |
+|---------------|----------------|-------------------------|
+| track_id      | NVARCHAR(50)   | Unique track ID         |
+| track_title   | NVARCHAR(300)  | Title of the track      |
 
 ---
 
 ### `gold.dim_content_structure`
-Hierarchical structure joining lessons → topics → courses → tracks.
 
-| Column Name         | Data Type | Description                        |
-|----------------------|-----------|------------------------------------|
-| lesson_id            | INT       | Lesson ID                          |
-| topic_id             | INT       | Topic ID                           |
-| course_id            | INT       | Course ID                          |
-| lesson_title         | TEXT      | Title of lesson                    |
-| lesson_type          | TEXT      | Type of lesson                     |
-| duration_in_sec      | INT       | Duration of lesson                 |
-| topic_title          | TEXT      | Topic title                        |
-| course_title         | TEXT      | Course title                       |
-| track_title          | TEXT      | Track title                        |
+This is a denormalized view that connects lessons → topics → courses → tracks, combining all structural content hierarchies in one place.
+
+**Example Use Case**: Used extensively in BI tools for building hierarchies, drill-downs, and breadcrumb-style content navigation.
+
+| Column Name     | Data Type      | Description                  |
+|------------------|----------------|------------------------------|
+| lesson_id        | NVARCHAR(50)   | Lesson ID                    |
+| topic_id         | NVARCHAR(50)   | Topic ID                     |
+| course_id        | NVARCHAR(50)   | Course ID                    |
+| lesson_title     | NVARCHAR(300)  | Title of lesson              |
+| lesson_type      | NVARCHAR(50)   | Type of lesson               |
+| duration_in_sec  | INT            | Duration of lesson           |
+| topic_title      | NVARCHAR(300)  | Topic title                  |
+| course_title     | NVARCHAR(300)  | Course title                 |
+| track_title      | NVARCHAR(300)  | Track title                  |
 
 ---
 
 ## 📗 Fact Views
 
-These views capture transactional or measurable user interactions.
-
 ### `gold.fact_user_lesson_progress`
-Tracks user progress in each lesson.
 
-| Column Name                   | Data Type | Description                            |
-|-------------------------------|-----------|----------------------------------------|
-| id                            | INT       | Record ID                              |
-| user_id                       | INT       | User ID                                |
-| lesson_id                     | INT       | Lesson ID                              |
-| completion_percentage_difference | FLOAT | Change in completion since last record |
-| overall_completion_percentage | FLOAT     | Cumulative completion                  |
-| activity_recorded_datetime    | DATETIME  | Timestamp of the activity              |
+This fact table logs the user’s progress for each lesson. It records both the change in completion since the last entry and the overall percentage.
+
+**Example Use Case**: Track learning velocity or generate progress-over-time reports.
+
+| Column Name                    | Data Type     | Description                            |
+|--------------------------------|---------------|----------------------------------------|
+| id                             | NVARCHAR(50)  | Record ID                              |
+| user_id                        | NVARCHAR(50)  | User ID                                |
+| lesson_id                      | NVARCHAR(50)  | Lesson ID                              |
+| completion_percentage_difference | INT         | Change in completion since last record |
+| overall_completion_percentage  | INT           | Cumulative completion                  |
+| activity_recorded_datetime     | DATETIME      | Timestamp of the activity              |
 
 ---
 
 ### `gold.fact_user_feedback`
-Feedback submitted by users on lessons.
 
-| Column Name         | Data Type | Description                        |
-|----------------------|-----------|------------------------------------|
-| id                   | INT       | Unique feedback record ID          |
-| feedback_id          | INT       | Feedback session ID                |
-| user_id              | INT       | User ID                            |
-| lesson_id            | INT       | Lesson ID                          |
-| language             | TEXT      | Language of the feedback           |
-| question             | TEXT      | Feedback question type             |
-| answer               | TEXT      | Response to the question           |
-| creation_datetime    | DATETIME  | Timestamp of feedback              |
+Stores structured feedback provided by users about lessons. It supports multilingual content and includes both questions and responses.
+
+**Example Use Case**: Analyze user sentiment or extract improvement areas based on lesson feedback.
+
+| Column Name      | Data Type      | Description                       |
+|------------------|----------------|-----------------------------------|
+| id               | NVARCHAR(50)   | Unique feedback record ID         |
+| feedback_id      | NVARCHAR(50)   | Feedback session ID               |
+| user_id          | NVARCHAR(50)   | User ID                           |
+| lesson_id        | NVARCHAR(50)   | Lesson ID                         |
+| language         | NVARCHAR(50)   | Language of the feedback          |
+| question         | NVARCHAR(50)   | Feedback question type            |
+| answer           | NVARCHAR(300)  | Response to the question          |
+| creation_datetime| DATETIME       | Timestamp of feedback             |
 
 ---
 
 ## 📙 Aggregate Views
 
-These views represent pre-aggregated data for performance-optimized reporting.
-
 ### `gold.agg_day_and_lesson_wise_user_activity`
-Daily user lesson completion statistics.
 
-| Column Name                | Data Type | Description                       |
-|----------------------------|-----------|-----------------------------------|
-| user_id                    | INT       | User ID                           |
-| lesson_id                  | INT       | Lesson ID                         |
-| activity_date              | DATE      | Date of activity                  |
-| daily_completion_percentage| FLOAT     | Max completion on that day        |
+Captures the highest lesson completion percentage achieved by a user per lesson per day. This helps in understanding daily learning activity.
+
+**Example Use Case**: Identify active vs. dormant users on any given day.
+
+| Column Name                 | Data Type | Description                     |
+|-----------------------------|-----------|---------------------------------|
+| user_id                     | INT       | User ID                         |
+| lesson_id                   | INT       | Lesson ID                       |
+| activity_date               | DATE      | Date of activity                |
+| daily_completion_percentage | FLOAT     | Max completion on that day      |
 
 ---
 
 ### `gold.agg_user_learning_streaks`
-User learning streak analysis (consecutive learning days).
 
-| Column Name         | Data Type | Description                          |
-|----------------------|-----------|--------------------------------------|
-| user_id              | INT       | User ID                              |
-| activity_date        | DATE      | Date of the activity                 |
-| streak_group_id      | INT       | Streak group identifier              |
-| streak_day_number    | INT       | Day number within the streak         |
+This view tracks user learning streaks — a count of consecutive days a user was active. It’s useful for gamification or behavioral retention metrics.
+
+**Example Use Case**: Reward users for 7-day or 30-day learning streaks.
+
+
+| Column Name      | Data Type | Description                    |
+|------------------|-----------|--------------------------------|
+| user_id          | INT       | User ID                        |
+| activity_date    | DATE      | Date of the activity           |
+| streak_group_id  | INT       | Streak group identifier        |
+| streak_day_number| INT       | Day number within the streak   |
 
 ---
 
 ### `gold.agg_course_wise_user_completion_percentages`
-User-level course completion percentages.
 
-| Column Name                 | Data Type | Description                           |
-|-----------------------------|-----------|---------------------------------------|
-| user_id                     | INT       | User ID                               |
-| course_id                   | INT       | Course ID                             |
-| course_completion_percentage| DECIMAL   | Completion % of the course            |
+A high-level summary of how much of a course a user has completed. Helpful for curriculum engagement tracking.
+
+**Example Use Case**: See how many users finished 100% of a course or dropped off midway.
+
+| Column Name                  | Data Type | Description                       |
+|------------------------------|-----------|-----------------------------------|
+| user_id                      | INT       | User ID                           |
+| course_id                    | INT       | Course ID                         |
+| course_completion_percentage | DECIMAL   | Completion % of the course        |
 
 ---
 
 ### `gold.agg_user_feedback_details`
-Condensed view of structured feedback by users per lesson.
 
-| Column Name         | Data Type | Description                              |
-|----------------------|-----------|------------------------------------------|
-| user_id              | INT       | User ID                                  |
-| lesson_id            | INT       | Lesson ID                                |
-| rating               | TEXT      | Rating given by user                     |
-| liked                | TEXT      | What the user liked                      |
-| better_to_improve    | TEXT      | Areas for improvement                    |
-| other_feedback       | TEXT      | Other comments                           |
-| feedback_timestamp   | DATETIME  | Timestamp of feedback                    |
+A condensed, normalized summary of structured feedback, including ratings and comments. This simplifies querying user satisfaction metrics.
+
+**Example Use Case**: Identify lessons with low ratings or most frequent suggestions for improvement.
+
+| Column Name       | Data Type     | Description                          |
+|-------------------|---------------|--------------------------------------|
+| user_id           | INT           | User ID                              |
+| lesson_id         | INT           | Lesson ID                            |
+| rating            | TEXT          | Rating given by user                 |
+| liked             | TEXT          | What the user liked                  |
+| better_to_improve | TEXT          | Areas for improvement                |
+| other_feedback    | TEXT          | Other comments                       |
+| feedback_timestamp| DATETIME      | Timestamp of feedback                |
 
 ---
 
@@ -199,6 +233,4 @@ The Gold Layer contains:
 - **2 Fact Views** (User progress and feedback)
 - **4 Aggregated Views** (Streaks, Course Completion, Daily Progress, Feedback Summary)
 
-These views are clean, consistent, and ready for consumption by BI tools like Power BI, Tableau, or custom dashboards.
-
----
+These views are standardized and optimized for analytics tools like Power BI, Tableau, or custom dashboards.
